@@ -1,0 +1,8 @@
+#!/bin/bash
+function pf(){
+    args=$(sed 's/ /.*/g' <<< "$@")
+    path_pass="find ~/.password-store -name '*.gpg'| cut -d \/ -f5- | grep -E \"$args\" | sed -e 's:.gpg$::gi'"
+    cmd="$path_pass | xargs pass show | pbcopy"
+    eval ${path_pass}"| sed -e 's:.gpg$::gi'| head -n 1"
+    eval ${cmd}
+}
